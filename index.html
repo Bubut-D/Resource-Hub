@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>My Resource Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Theme initialization script -->
+    <script>
+        (function() {
+            const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <a href="index.html" class="home-button" title="Home" aria-label="Go to home page">
+            <i class="fas fa-home"></i>
+        </a>
+        
+        <div class="sidebar-content">
+            <h2>Navigation</h2>
+            <!-- Dynamic sidebar sections will be generated here -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1><i class="fas fa-cube"></i> My Resource Hub</h1>
+        
+        <div class="welcome-section">
+            <p>Welcome to my comprehensive resource hub! Browse through the categories below to explore curated content, downloadable resources, and useful tools for development, design, and learning.</p>
+            <div class="theme-indicator">
+                <small>💡 <strong>Tip:</strong> Use the theme toggle in the sidebar to switch between light and dark modes, or press <kbd>Ctrl+Shift+T</kbd></small>
+            </div>
+        </div>
+        
+        <!-- Dynamic modules will be generated here -->
+
+        <!-- Theme Preview Section (kept static as example) -->
+        <div class="module collapsed">
+            <div class="module-header" onclick="toggleModule(this)" role="button" tabindex="0">
+                <span><i class="fas fa-swatchbook"></i> Theme Preview</span>
+            </div>
+            <div class="module-body">
+                <p>See how different elements look in both light and dark themes.</p>
+                
+                <div class="theme-preview-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Sample Card</h3>
+                            <span class="badge success">Active</span>
+                        </div>
+                        <div class="card-content">
+                            <p>This is how cards appear in the current theme. Notice how the colors adapt automatically.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="download-item" data-filename="sample-file.pdf">
+                        <div class="file-icon pdf">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="file-details">
+                            <div class="file-name">Sample Download Item</div>
+                            <div class="file-size">1.2 MB</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-links">
+                        <a href="#" class="btn btn-primary">Primary Button</a>
+                        <a href="#" class="btn btn-secondary">Secondary Button</a>
+                        <span class="badge warning">Warning</span>
+                        <span class="badge danger">Error</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal()" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modalImage" src="" alt="Modal Image">
+            <div class="modal-info">
+                <h3 id="modalTitle">Image Title</h3>
+                <p id="modalDescription">Image description will appear here</p>
+            </div>
+            <button class="modal-download" onclick="downloadImage()">
+                <i class="fas fa-download"></i> Download Image
+            </button>
+        </div>
+    </div>
+
+    <!-- Module configuration -->
+    <script src="modules-config.js"></script>
+    <!-- Original functionality scripts -->
+    <script src="script.js"></script>
+    <!-- Dynamic module generator -->
+    <script src="dynamic-modules.js"></script>
+
+    <!-- Theme toggle functionality -->
+    <script>
+        // Theme toggle (updated to work without localStorage for Claude environment)
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Update theme indicator
+            updateThemeIndicator(newTheme);
+        }
+
+        function updateThemeIndicator(theme) {
+            const indicator = document.querySelector('.theme-indicator');
+            if (indicator) {
+                const tip = indicator.querySelector('small');
+                if (tip) {
+                    tip.innerHTML = `💡 <strong>Tip:</strong> Currently using ${theme} theme. Toggle with <kbd>Ctrl+Shift+T</kbd>`;
+                }
+            }
+        }
+
+        // Keyboard shortcut for theme toggle
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+
+        // Add theme toggle button to sidebar (if not already present)
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && !sidebar.querySelector('.theme-toggle')) {
+                const themeToggle = document.createElement('button');
+                themeToggle.className = 'theme-toggle';
+                themeToggle.onclick = toggleTheme;
+                themeToggle.title = 'Toggle theme (Ctrl+Shift+T)';
+                themeToggle.innerHTML = '<i class="fas fa-adjust"></i>';
+                sidebar.insertBefore(themeToggle, sidebar.querySelector('.sidebar-content'));
+            }
+        });
+    </script>
+</body>
+</html>

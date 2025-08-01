@@ -1,0 +1,94 @@
+/* =============================================================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================================================= */
+
+:root {
+    /* Layout Variables */
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 50px;
+    
+    /* Border Radius */
+    --radius-small: 8px;
+    --radius-medium: 12px;
+    --radius-large: 20px;
+    --radius-round: 50%;
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 0.6s ease;
+    
+    /* Z-Index Scale */
+    --z-sidebar: 1000;
+    --z-overlay: 999;
+    --z-modal: 2000;
+    --z-theme-toggle: 1001;
+    
+    /* Dark Theme Colors (Default) */
+    --primary-color: #4a90e2;
+    --secondary-color: #50c878;
+    --accent-color: #64b5f6;
+    --warning-color: #ffb74d;
+    --danger-color: #e57373;
+    --success-color: #81c784;
+    
+    /* Dark Background Colors */
+    --bg-dark: #0f0f0f;
+    --bg-light: #1a1a1a;
+    --bg-secondary: #242424;
+    --bg-accent: #2d2d2d;
+    --bg-gradient-primary: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    --bg-gradient-secondary: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    --bg-gradient-sidebar: linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
+    
+    /* Dark Text Colors */
+    --text-color: #ffffff;
+    --text-muted: #b0b0b0;
+    --text-secondary: #888888;
+    
+    /* Dark Interactive Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    --gradient-hover: linear-gradient(135deg, #5ba3f5 0%, #66d18a 100%);
+    --gradient-accent: linear-gradient(135deg, #333333 0%, #404040 100%);
+    
+    /* Dark Borders and Shadows */
+    --border-color: #404040;
+    --border-light: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --shadow-small: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --primary-color: #2563eb;
+    --secondary-color: #059669;
+    --accent-color: #3b82f6;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --success-color: #10b981;
+    
+    --bg-dark: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-accent: #e2e8f0;
+    --bg-gradient-primary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --bg-gradient-secondary: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+    --bg-gradient-sidebar: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    
+    --text-color: #1e293b;
+    --text-muted: #64748b;
+    --text-secondary: #94a3b8;
+    
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    --gradient-hover: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    --gradient-accent: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    
+    --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-small: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.15);
+}

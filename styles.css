@@ -1,0 +1,34 @@
+/* =============================================================================
+   MY RESOURCE HUB - MASTER STYLESHEET
+   Import all modular CSS files in the correct order
+   ============================================================================= */
+
+/* Import CSS files in dependency order */
+@import url('styles/variables.css');      /* 1. CSS Custom Properties */
+@import url('styles/base.css');          /* 2. Base styles and reset */
+@import url('styles/sidebar.css');       /* 3. Sidebar navigation */
+@import url('styles/layout.css');        /* 4. Main layout and content */
+@import url('styles/components.css');    /* 5. Reusable components */
+@import url('styles/modals.css');        /* 6. Modal and overlay styles */
+@import url('styles/themes.css');        /* 7. Theme specific styles & utilities */
+@import url('styles/responsive.css');    /* 8. Responsive design & print styles */
+
+/*
+  File Structure Explanation:
+  
+  1. variables.css - All CSS custom properties and theme definitions
+  2. base.css - Basic element styles, reset, and global styles
+  3. sidebar.css - All sidebar navigation related styles
+  4. layout.css - Main content layout and page structure
+  5. components.css - Reusable UI components (cards, buttons, etc.)
+  6. modals.css - Modal dialogs and overlay styles
+  7. themes.css - Theme-specific adjustments and utility classes
+  8. responsive.css - Media queries and responsive adjustments
+  
+  This modular approach provides:
+  - Better organization and maintainability
+  - Easier debugging and updates
+  - Potential for code splitting and lazy loading
+  - Clear separation of concerns
+  - Better collaboration in team environments
+*/
