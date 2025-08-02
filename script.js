@@ -169,7 +169,13 @@ class ThemeManager {
         `;
 
         const sidebar = document.getElementById('sidebar');
-        if (sidebar) sidebar.appendChild(themeToggle);
+        const sidebarContent = sidebar?.querySelector('.sidebar-content');
+        if (sidebar && sidebarContent) {
+            // Insert before sidebar-content to avoid conflicts with home button
+            sidebar.insertBefore(themeToggle, sidebarContent);
+        } else if (sidebar) {
+            sidebar.appendChild(themeToggle);
+        }
     }
 
     bindEvents() {

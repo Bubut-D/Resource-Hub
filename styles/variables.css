@@ -1,5 +1,5 @@
 /* =============================================================================
-   CSS CUSTOM PROPERTIES (VARIABLES)
+   CSS CUSTOM PROPERTIES (VARIABLES) WITH ENHANCED ANIMATION TIMING
    ============================================================================= */
 
 :root {
@@ -13,10 +13,32 @@
     --radius-large: 20px;
     --radius-round: 50%;
     
-    /* Transitions */
-    --transition-fast: 0.3s ease;
+    /* Enhanced Transitions with Better Timing */
+    --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: 0.6s ease;
+    --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elastic: 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-slide: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Animation Durations */
+    --duration-fast: 0.2s;
+    --duration-normal: 0.3s;
+    --duration-slow: 0.5s;
+    --duration-slower: 0.8s;
+    
+    /* Animation Delays */
+    --delay-fast: 0.1s;
+    --delay-normal: 0.2s;
+    --delay-slow: 0.3s;
+    --delay-slower: 0.4s;
+    
+    /* Easing Functions */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-back: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
     /* Z-Index Scale */
     --z-sidebar: 1000;
@@ -58,6 +80,11 @@
     --shadow-small: 0 4px 15px rgba(0, 0, 0, 0.3);
     --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.4);
     --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(100, 181, 246, 0.3);
+    
+    /* Animation Specific Shadows */
+    --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.6);
+    --shadow-active: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Light Theme */
@@ -91,4 +118,57 @@
     --shadow-small: 0 4px 15px rgba(0, 0, 0, 0.08);
     --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
     --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
+    
+    /* Light Theme Animation Specific Shadows */
+    --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.18);
+    --shadow-active: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================================================
+   GLOBAL ANIMATION UTILITIES
+   ============================================================================= */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Enhanced focus states with animations */
+*:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    animation: focusPulse 0.6s ease-out;
+}
+
+@keyframes focusPulse {
+    0% {
+        outline-color: transparent;
+        outline-width: 0px;
+    }
+    50% {
+        outline-color: var(--accent-color);
+        outline-width: 4px;
+    }
+    100% {
+        outline-color: var(--accent-color);
+        outline-width: 2px;
+    }
+}
+
+/* Global hover enhancement */
+.hover-enhance {
+    transition: all var(--transition-fast);
+}
+
+.hover-enhance:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-hover);
 }

@@ -1,48 +1,64 @@
 /* =============================================================================
-   SIDEBAR NAVIGATION STYLES
-   ============================================================================= */
+  SIDEBAR NAVIGATION STYLES WITH ENHANCED ANIMATIONS - FIXED VERSION
+  ============================================================================= */
 
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    background: var(--bg-gradient-sidebar);
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: var(--z-sidebar);
-    transition: all var(--transition-fast);
-    width: var(--sidebar-collapsed-width);
-    box-shadow: 2px 0 10px var(--shadow-color);
-    border-right: 1px solid var(--border-light);
+   position: fixed;
+   top: 0;
+   left: 0;
+   height: 100vh;
+   background: var(--bg-gradient-sidebar);
+   overflow-y: auto;
+   overflow-x: hidden;
+   z-index: var(--z-sidebar);
+   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+   width: var(--sidebar-collapsed-width);
+   box-shadow: 2px 0 10px var(--shadow-color);
+   border-right: 1px solid var(--border-light);
 }
 
 .sidebar.open {
-    width: var(--sidebar-width);
+   width: var(--sidebar-width);
+   box-shadow: 4px 0 20px var(--shadow-color);
 }
 
+
+/* Enhanced Sidebar Toggle Animation - FIXED POSITIONING */
 .sidebar-toggle {
-    position: absolute;
-    top: 15px;
-    left: 5px;
-    background: none;
-    border: none;
-    color: var(--accent-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: var(--radius-round);
-    transition: all var(--transition-fast);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+   position: absolute !important;
+   top: 15px !important;
+   left: 15px !important; /* This positions it from the left edge of the sidebar */
+   right: auto !important;
+   background: none;
+   border: none;
+   color: var(--accent-color);
+   font-size: 1.5rem;
+   cursor: pointer;
+   padding: 8px;
+   border-radius: var(--radius-round);
+   transition: all var(--transition-fast);
+   width: 40px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transform: scale(1);
+   z-index: 1002 !important;
 }
 
 .sidebar-toggle:hover {
-    background-color: rgba(168, 218, 220, 0.1);
-    color: var(--text-color);
+   background-color: rgba(168, 218, 220, 0.1);
+   color: var(--text-color);
+   transform: scale(1.1) rotate(5deg);
+}
+
+.sidebar-toggle:active {
+   transform: scale(0.95);
+}
+
+.sidebar.open .sidebar-toggle i {
+   transform: rotate(180deg);
+   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .home-button {
@@ -74,28 +90,44 @@
     transform: scale(1);
 }
 
+.sidebar:not(.open) .home-button {
+   opacity: 0 !important;
+   visibility: hidden !important;
+   transform: scale(0) !important;
+}
+
 .home-button:hover {
     background: var(--gradient-hover);
     transform: scale(1.1);
     box-shadow: var(--shadow-small);
 }
 
+.home-button:active {
+   transform: scale(0.9) rotate(0deg);
+}
+
+/* Ensure sidebar content doesn't overlap with buttons */
 .sidebar-content {
-    padding: 60px 20px 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-fast);
-    width: 100%;
+   padding: 70px 20px 20px !important; /* Top padding accounts for both buttons */
+   opacity: 0;
+   visibility: hidden;
+   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+   width: 100%;
+   transform: translateX(-20px);
 }
 
 .sidebar.open .sidebar-content {
-    opacity: 1;
-    visibility: visible;
+   opacity: 1;
+   visibility: visible;
+   transform: translateX(0);
+   transition-delay: 0.1s;
 }
 
+/* Ensure no margin/positioning conflicts with sidebar header */
 .sidebar h2 {
-    color: var(--accent-color);
+    margin-top: 0 !important;
     margin-bottom: 20px;
+    color: var(--accent-color);
     font-size: 1.2rem;
     text-align: center;
     border-bottom: 2px solid var(--accent-color);
@@ -103,98 +135,187 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transform: translateY(-10px);
+    opacity: 0;
 }
 
+.sidebar.open h2 {
+   animation: slideInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes slideInDown {
+   from {
+       transform: translateY(-20px);
+       opacity: 0;
+   }
+   to {
+       transform: translateY(0);
+       opacity: 1;
+   }
+}
+
+/* Enhanced Sidebar Section Animations - Remove Auto-Animations */
 .sidebar-section {
-    margin-bottom: 15px;
-    border-radius: var(--radius-small);
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.05);
+   margin-bottom: 15px;
+   border-radius: var(--radius-small);
+   overflow: hidden;
+   background-color: rgba(255, 255, 255, 0.05);
+   /* Remove the automatic animations - let JavaScript handle them */
+   transition: all var(--transition-fast);
 }
 
+.sidebar-section:hover {
+   transform: translateX(5px) scale(1.02);
+   background-color: rgba(255, 255, 255, 0.08);
+   box-shadow: var(--shadow-small);
+}
+
+/* Enhanced Sidebar Header Animation */
 .sidebar-header {
-    padding: 12px 15px;
-    background: var(--gradient-primary);
-    cursor: pointer;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+   padding: 12px 15px;
+   background: var(--gradient-primary);
+   cursor: pointer;
+   font-weight: 500;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   transition: all var(--transition-fast);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   position: relative;
+}
+
+.sidebar-header::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+   transition: left 0.6s ease;
+}
+
+.sidebar-header:hover::before {
+   left: 100%;
 }
 
 .sidebar-header:hover {
-    background: var(--gradient-hover);
+   background: var(--gradient-hover);
+   transform: scale(1.02);
 }
 
 .sidebar-header::after {
-    content: "▼";
-    font-size: 0.8rem;
-    transition: transform var(--transition-fast);
-    flex-shrink: 0;
-    margin-left: 10px;
+   content: "▼";
+   font-size: 0.8rem;
+   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   flex-shrink: 0;
+   margin-left: 10px;
+   transform-origin: center;
 }
 
 .sidebar-section.collapsed .sidebar-header::after {
-    transform: rotate(-90deg);
+   transform: rotate(-90deg);
 }
 
+/* Enhanced Sidebar Links Animation - Slower Timing */
 .sidebar-links {
-    max-height: 200px;
-    overflow: hidden;
-    transition: max-height var(--transition-fast);
+   max-height: 500px;
+   overflow: hidden;
+   transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.6s ease 0.1s,
+               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+   opacity: 1;
+   transform: translateY(0);
 }
 
 .sidebar-section.collapsed .sidebar-links {
-    max-height: 0;
+   max-height: 0;
+   opacity: 0;
+   transform: translateY(-10px);
+   transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.4s ease,
+               transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-links a {
-    display: block;
-    color: var(--accent-color);
-    text-decoration: none;
-    padding: 10px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+   display: block;
+   color: var(--accent-color);
+   text-decoration: none;
+   padding: 10px 20px;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   transform: translateX(0);
+   position: relative;
+   overflow: hidden;
+}
+
+.sidebar-links a::before {
+   content: '';
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 3px;
+   height: 100%;
+   background: var(--accent-color);
+   transform: scaleY(0);
+   transition: transform var(--transition-fast);
+   transform-origin: bottom;
+}
+
+.sidebar-links a:hover::before {
+   transform: scaleY(1);
+   transform-origin: top;
 }
 
 .sidebar-links a:hover {
-    background-color: rgba(168, 218, 220, 0.1);
-    color: var(--text-color);
-    padding-left: 30px;
+   background-color: rgba(168, 218, 220, 0.1);
+   color: var(--text-color);
+   padding-left: 35px;
+   transform: translateX(5px) scale(1.02);
+}
+
+.sidebar-links a:active {
+   transform: translateX(2px) scale(0.98);
+   transition: all 0.1s ease;
 }
 
 .sidebar-links a:last-child {
-    border-bottom: none;
+   border-bottom: none;
 }
 
+/* Enhanced Sidebar Overlay Animation */
 .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: var(--z-overlay);
-    display: none;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: var(--z-overlay);
+   opacity: 0;
+   visibility: hidden;
+   transition: all var(--transition-fast);
+   backdrop-filter: blur(0px);
 }
 
 .sidebar-overlay.active {
-    display: block;
+   opacity: 1;
+   visibility: visible;
+   backdrop-filter: blur(3px);
 }
 
-/* Theme Toggle Button */
+/* Enhanced Theme Toggle Button Animation - ENSURE NO CONFLICTS */
 .theme-toggle {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
     width: 40px;
     height: 40px;
     border-radius: var(--radius-round);
@@ -206,52 +327,65 @@
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    transition: all var(--transition-fast);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     box-shadow: var(--shadow-small);
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%) scale(0.8);
     z-index: var(--z-theme-toggle);
 }
 
 .sidebar.open .theme-toggle {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) scale(1);
-    transition: all var(--transition-fast) 0.2s;
+   opacity: 1 !important;
+   visibility: visible !important;
+   transform: translateX(-50%) scale(1) rotate(0deg) !important;
+   transition-delay: 0.4s;
 }
 
 .theme-toggle:hover {
-    background: var(--gradient-hover);
-    transform: translateX(-50%) scale(1.1);
-    box-shadow: var(--shadow-medium);
+   background: var(--gradient-hover);
+   transform: translateX(-50%) scale(1.15) rotate(15deg);
+   box-shadow: var(--shadow-medium);
 }
 
 .theme-toggle:active {
-    transform: translateX(-50%) scale(0.95);
+   transform: translateX(-50%) scale(0.9) rotate(0deg);
+   transition: all 0.1s ease;
 }
 
 .theme-toggle .icon {
-    transition: all var(--transition-fast);
-    position: absolute;
+   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+   position: absolute;
 }
 
 .theme-toggle .sun-icon {
-    opacity: 0;
-    transform: rotate(180deg) scale(0);
+   opacity: 0;
+   transform: rotate(180deg) scale(0);
 }
 
 .theme-toggle .moon-icon {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
+   opacity: 1;
+   transform: rotate(0deg) scale(1);
 }
 
 [data-theme="light"] .theme-toggle .sun-icon {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
+   opacity: 1;
+   transform: rotate(0deg) scale(1);
 }
 
 [data-theme="light"] .theme-toggle .moon-icon {
-    opacity: 0;
-    transform: rotate(-180deg) scale(0);
+   opacity: 0;
+   transform: rotate(-180deg) scale(0);
 }
+
+/* Pulse animation for active elements */
+
+@keyframes pulse {
+   0%, 100% { opacity: 1; }
+   50% { opacity: 0.7; }
+}
+
+.sidebar-section.active .sidebar-header {
+   animation: pulse 2s infinite;
+}
+
+

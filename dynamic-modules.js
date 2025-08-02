@@ -1,4 +1,4 @@
-// Dynamic Module Generator - Production Version
+// Dynamic Module Generator - Production Version (Fixed)
 class ModuleGenerator {
     constructor(configPath = null) {
         this.configPath = configPath;
@@ -10,11 +10,11 @@ class ModuleGenerator {
     async init() {
         try {
             await this.loadConfig();
-            
+           
             if (!this.isSubpage) {
                 this.generateMainModules();
             }
-            
+           
             this.generateSidebarModules();
         } catch (error) {
             console.error('Error initializing modules:', error);
@@ -26,7 +26,7 @@ class ModuleGenerator {
             this.modules = window.modulesConfig.modules;
             return;
         }
-        
+       
         this.modules = [];
         console.warn('No module configuration found. Make sure modules-config.js is loaded before dynamic-modules.js');
     }
@@ -46,7 +46,7 @@ class ModuleGenerator {
 
         const existingModules = mainContent.querySelectorAll('.module');
         let themePreviewModule = null;
-        
+       
         existingModules.forEach(module => {
             const headerText = module.querySelector('.module-header span')?.textContent || '';
             if (headerText.includes('Theme Preview')) {
@@ -113,12 +113,12 @@ class ModuleGenerator {
         const iconHTML = this.createIconHTML(moduleData.icon);
         const linksHTML = moduleData.links.map(link => {
             const linkIconHTML = this.createIconHTML(link.icon);
-            
+           
             let correctedUrl = link.url;
             if (this.isSubpage) {
                 correctedUrl = `../${link.url}`;
             }
-            
+           
             return `
                 <a href="${correctedUrl}">
                     ${linkIconHTML} ${link.name}
@@ -176,7 +176,7 @@ class ModuleGenerator {
     getCurrentPageInfo() {
         const path = window.location.pathname;
         const filename = path.split('/').pop();
-        
+       
         for (const module of this.modules) {
             for (const link of module.links) {
                 if (link.url.includes(filename)) {
@@ -193,16 +193,43 @@ class ModuleGenerator {
     }
 }
 
-// Initialize the module generator when the page loads
+// Initialize the module generator when the page loads - FIXED VERSION
 let moduleGenerator;
 
-document.addEventListener('DOMContentLoaded', async () => {
-    setTimeout(async () => {
+// Check if modules config is already loaded
+function initializeModules() {
+    if (window.modulesConfig && window.modulesConfig.modules) {
         moduleGenerator = new ModuleGenerator();
-        await moduleGenerator.init();
+        moduleGenerator.init();
         window.moduleGenerator = moduleGenerator;
-    }, 100);
-});
+        return true;
+    }
+    return false;
+}
+
+// Try to initialize immediately if config is already available
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Try immediate initialization
+        if (!initializeModules()) {
+            // If config not ready, wait a short moment for scripts to load
+            setTimeout(() => {
+                if (!initializeModules()) {
+                    console.warn('Module configuration still not available after delay');
+                }
+            }, 10); // Reduced from 100ms to 10ms
+        }
+    });
+} else {
+    // Document already loaded
+    if (!initializeModules()) {
+        setTimeout(() => {
+            if (!initializeModules()) {
+                console.warn('Module configuration still not available after delay');
+            }
+        }, 10);
+    }
+}
 
 // Enhanced ModulesAPI that works with path detection
 window.ModulesAPI = {
@@ -221,7 +248,7 @@ window.ModulesAPI = {
     getCurrentPageInfo() {
         const path = window.location.pathname;
         const filename = path.split('/').pop();
-        
+       
         for (const module of this.getAllModules()) {
             for (const link of module.links) {
                 if (link.url.includes(filename)) {
@@ -260,7 +287,7 @@ window.ModulesAPI = {
         }
 
         window.modulesConfig.modules.push(moduleData);
-        
+       
         if (window.moduleGenerator) {
             window.moduleGenerator.modules = window.modulesConfig.modules;
             if (!window.moduleGenerator.isSubpage) {
@@ -268,7 +295,7 @@ window.ModulesAPI = {
             }
             window.moduleGenerator.generateSidebarModules();
         }
-        
+       
         return true;
     },
 
@@ -329,7 +356,7 @@ window.ModulesAPI = {
             const config = JSON.parse(jsonString);
             if (config.modules && Array.isArray(config.modules)) {
                 window.modulesConfig = config;
-                
+               
                 if (window.moduleGenerator) {
                     window.moduleGenerator.modules = window.modulesConfig.modules;
                     if (!window.moduleGenerator.isSubpage) {
@@ -337,7 +364,7 @@ window.ModulesAPI = {
                     }
                     window.moduleGenerator.generateSidebarModules();
                 }
-                
+               
                 return true;
             } else {
                 console.error('Invalid JSON structure. Must have a "modules" array.');
