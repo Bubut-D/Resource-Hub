@@ -29,29 +29,38 @@
     margin-right: 15px;
     font-size: 1.5em;
     border-radius: var(--radius-medium);
-    color: var(--text-color);
+    color: #ffffff;
     background: var(--gradient-primary);
     flex-shrink: 0;
 }
 
 .file-icon.pdf {
-    background: linear-gradient(135deg, #e63946 0%, #f77f00 100%);
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
 }
 
 .file-icon.zip {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #1d3557 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
 }
 
 .file-icon.image {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, #264653 100%);
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
 }
 
-.file-icon.doc {
-    background: linear-gradient(135deg, #2b5797 0%, #1e3a5f 100%);
+.file-icon.doc,
+.file-icon.docx {
+    background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+}
+
+.file-icon.txt {
+    background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
 }
 
 .file-icon.video {
-    background: linear-gradient(135deg, #d90429 0%, #8d0801 100%);
+    background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.file-icon.audio {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
 }
 
 .file-details {

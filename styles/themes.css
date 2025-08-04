@@ -28,17 +28,6 @@
     color: var(--primary-color);
 }
 
-[data-theme="light"] .file-icon.pdf {
-    background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-}
-
-[data-theme="light"] .file-icon.zip {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-}
-
-[data-theme="light"] .file-icon.image {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
-}
 
 [data-theme="light"] .badge.warning {
     background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
