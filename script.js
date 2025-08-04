@@ -25,15 +25,53 @@ function closeSidebar() {
     overlay.classList.remove('active');
 }
 
+// FIXED: Enhanced sidebar section toggle with proper closing behavior
 function toggleSidebarSection(header) {
-    const section = header.parentElement;
+    const currentSection = header.closest('.sidebar-section');
     const allSections = document.querySelectorAll('.sidebar-section');
+    const isCurrentlyOpen = !currentSection.classList.contains('collapsed');
     
-    allSections.forEach(s => {
-        if (s !== section) s.classList.add('collapsed');
+    // Close ALL other sections first
+    allSections.forEach(section => {
+        if (section !== currentSection) {
+            section.classList.add('collapsed');
+            // Reset any inline styles from animations
+            const links = section.querySelectorAll('.sidebar-links a');
+            links.forEach(link => {
+                link.style.opacity = '';
+                link.style.transform = '';
+                link.style.transition = '';
+            });
+        }
     });
     
-    section.classList.toggle('collapsed');
+    // Toggle current section
+    currentSection.classList.toggle('collapsed');
+    
+    // If opening, animate links sliding in
+    if (!isCurrentlyOpen) {
+        const links = currentSection.querySelectorAll('.sidebar-links a');
+        setTimeout(() => {
+            links.forEach((link, index) => {
+                link.style.opacity = '0';
+                link.style.transform = 'translateX(-30px)';
+                link.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    link.style.opacity = '1';
+                    link.style.transform = 'translateX(0)';
+                }, index * 50);
+            });
+        }, 100);
+    } else {
+        // Reset when closing
+        const links = currentSection.querySelectorAll('.sidebar-links a');
+        links.forEach(link => {
+            link.style.opacity = '';
+            link.style.transform = '';
+            link.style.transition = '';
+        });
+    }
 }
 
 function toggleModule(header) {
@@ -48,36 +86,71 @@ function toggleModule(header) {
 }
 
 // =============================================================================
-// MODAL FUNCTIONS
+// MODAL FUNCTIONS - ENHANCED WITH STYLISH CLOSE BUTTON
 // =============================================================================
 
+// Enhanced Modal Functions for New Structure
 function showModal(src, title = '', description = '') {
     const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDescription = document.getElementById('modalDescription');
     
-    modalImg.src = src;
-    modalImg.alt = title;
+    // Create the new modal structure with enhanced close button
+    const modalHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="hideModal()" aria-label="Close modal">×</button>
+            </div>
+            <div class="modal-image-container">
+                <img id="modalImage" src="${src}" alt="${title}" loading="lazy">
+            </div>
+            <div class="modal-footer">
+                <div class="modal-info">
+                    <h3 id="modalTitle">${title || 'Image'}</h3>
+                    <p id="modalDescription">${description || 'Click download to save this image'}</p>
+                </div>
+                <button class="modal-download" onclick="downloadImage()" aria-label="Download image">
+                    <i class="fas fa-download"></i>
+                    <span>Download Image</span>
+                </button>
+            </div>
+        </div>
+    `;
     
-    if (modalTitle) modalTitle.textContent = title;
-    if (modalDescription) modalDescription.textContent = description || 'Click to download this image';
-    
+    modal.innerHTML = modalHTML;
     modal.style.display = 'flex';
     modal.classList.add('show');
     
+    // Store data for download function
     modal.dataset.currentImage = src;
-    modal.dataset.currentTitle = title;
+    modal.dataset.currentTitle = title || 'image';
     
+    // Prevent body scrolling
     document.body.style.overflow = 'hidden';
+    
+    // Add escape key listener
+    document.addEventListener('keydown', handleModalEscape);
+    
+    // Add click outside to close
+    modal.addEventListener('click', handleModalClickOutside);
 }
 
 function hideModal() {
     const modal = document.getElementById('imageModal');
-    modal.style.display = 'none';
-    modal.classList.remove('show');
     
-    document.body.style.overflow = '';
+    // Add fade out animation
+    modal.style.animation = 'modalFadeOut 0.3s ease forwards';
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        modal.style.animation = '';
+        
+        // Restore body scrolling
+        document.body.style.overflow = '';
+        
+        // Remove event listeners
+        document.removeEventListener('keydown', handleModalEscape);
+        modal.removeEventListener('click', handleModalClickOutside);
+    }, 300);
 }
 
 function downloadImage() {
@@ -85,14 +158,279 @@ function downloadImage() {
     const src = modal.dataset.currentImage;
     const title = modal.dataset.currentTitle || 'image';
     
-    const link = document.createElement('a');
-    link.href = src;
-    link.download = `${title.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}.jpg`;
+    // Add download animation to button
+    const downloadBtn = modal.querySelector('.modal-download');
+    const originalContent = downloadBtn.innerHTML;
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadBtn.innerHTML = `
+        <div class="spinner" style="width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <span>Downloading...</span>
+    `;
+    
+    downloadBtn.disabled = true;
+    
+    // Method 1: Canvas-based download (most reliable)
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Handle CORS
+    
+    img.onload = function() {
+        try {
+            // Create canvas and draw image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            
+            ctx.drawImage(img, 0, 0);
+            
+            // Convert to blob and download
+            canvas.toBlob(function(blob) {
+                if (blob) {
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    
+                    // Determine file extension
+                    let extension = 'png'; // Canvas toBlob defaults to PNG
+                    if (src.toLowerCase().includes('.jpg') || src.toLowerCase().includes('.jpeg')) {
+                        extension = 'jpg';
+                    }
+                    
+                    link.href = url;
+                    link.download = `${title.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}.${extension}`;
+                    
+                    // Force download
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Cleanup
+                    setTimeout(() => window.URL.revokeObjectURL(url), 100);
+                    
+                    showNotification('Download completed successfully!', 'success');
+                } else {
+                    throw new Error('Failed to create blob from canvas');
+                }
+            }, extension === 'jpg' ? 'image/jpeg' : 'image/png', 0.95);
+            
+        } catch (canvasError) {
+            console.error('Canvas method failed:', canvasError);
+            fallbackDownload();
+        }
+    };
+    
+    img.onerror = function() {
+        console.error('Image failed to load for canvas method');
+        fallbackDownload();
+    };
+    
+    // Method 2: Fetch with proper headers (fallback)
+    function fallbackDownload() {
+        fetch(src, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/octet-stream',
+            },
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Fetch failed');
+            return response.blob();
+        })
+        .then(blob => {
+            // Force download with proper MIME type
+            const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/octet-stream' }));
+            const link = document.createElement('a');
+            
+            let extension = 'png';
+            if (src.toLowerCase().includes('.jpg') || src.toLowerCase().includes('.jpeg')) extension = 'jpg';
+            else if (src.toLowerCase().includes('.gif')) extension = 'gif';
+            else if (src.toLowerCase().includes('.webp')) extension = 'webp';
+            else if (src.toLowerCase().includes('.svg')) extension = 'svg';
+            
+            link.href = url;
+            link.download = `${title.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}.${extension}`;
+            
+            // Additional attributes to force download
+            link.style.display = 'none';
+            link.setAttribute('download', link.download);
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => window.URL.revokeObjectURL(url), 100);
+            showNotification('Download completed!', 'success');
+        })
+        .catch(fetchError => {
+            console.error('Fetch method also failed:', fetchError);
+            lastResortDownload();
+        });
+    }
+    
+    // Method 3: Last resort with user instruction
+    function lastResortDownload() {
+        try {
+            // Open in new tab with download hint
+            const newWindow = window.open(src, '_blank');
+            if (newWindow) {
+                newWindow.focus();
+                showNotification('Image opened in new tab. Right-click and select "Save image as" to download.', 'warning', 6000);
+            } else {
+                throw new Error('Popup blocked');
+            }
+        } catch (error) {
+            showNotification('Download failed. Please right-click the image and select "Save image as".', 'error', 8000);
+        }
+    }
+    
+    // Always restore button state
+    function restoreButton() {
+        setTimeout(() => {
+            if (downloadBtn) {
+                downloadBtn.innerHTML = originalContent;
+                downloadBtn.disabled = false;
+            }
+        }, 1000);
+    }
+    
+    // Start the download process
+    img.src = src;
+    
+    // Ensure button is restored regardless of outcome
+    restoreButton();
 }
+
+function handleModalEscape(e) {
+    if (e.key === 'Escape') {
+        hideModal();
+    }
+}
+
+function handleModalClickOutside(e) {
+    if (e.target === e.currentTarget) {
+        hideModal();
+    }
+}
+
+// Add CSS animations for fade out
+const modalAnimationStyles = document.createElement('style');
+modalAnimationStyles.textContent = `
+    @keyframes modalFadeOut {
+        from { 
+            opacity: 1; 
+            backdrop-filter: blur(8px);
+        }
+        to { 
+            opacity: 0; 
+            backdrop-filter: blur(0px);
+        }
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .modal-download:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+    
+    .modal-download:disabled:hover {
+        transform: none !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    }
+`;
+
+// Add the styles to the document head
+if (!document.head.querySelector('#modal-animation-styles')) {
+    modalAnimationStyles.id = 'modal-animation-styles';
+    document.head.appendChild(modalAnimationStyles);
+}
+
+// Enhanced image loading with error handling
+function loadModalImage(src, alt, title) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = src;
+        img.alt = alt;
+        img.title = title;
+    });
+}
+
+// Update the existing showModal function to handle loading states
+function showModalWithLoading(src, title = '', description = '') {
+    const modal = document.getElementById('imageModal');
+    
+    // Show loading state first
+    const loadingHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="hideModal()" aria-label="Close modal">×</button>
+            </div>
+            <div class="modal-image-container" style="justify-content: center; align-items: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--text-muted);">
+                    <div class="spinner" style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p>Loading image...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-info">
+                    <h3>${title || 'Loading...'}</h3>
+                    <p>Please wait while the image loads</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.innerHTML = loadingHTML;
+    modal.style.display = 'flex';
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    
+    // Load the actual image
+    loadModalImage(src, title, title)
+        .then(() => {
+            // Image loaded successfully, show the full modal
+            showModal(src, title, description);
+        })
+        .catch((error) => {
+            console.error('Error loading modal image:', error);
+            
+            // Show error state
+            const errorHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="modal-close" onclick="hideModal()" aria-label="Close modal">×</button>
+                    </div>
+                    <div class="modal-image-container" style="justify-content: center; align-items: center;">
+                        <div style="text-align: center; color: var(--text-muted);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--warning-color); margin-bottom: 15px;"></i>
+                            <h3 style="margin: 0 0 10px 0;">Failed to load image</h3>
+                            <p style="margin: 0;">The image could not be loaded. Please try again.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-download" onclick="hideModal()" style="background: var(--danger-color);">
+                            <i class="fas fa-times"></i>
+                            <span>Close</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.innerHTML = errorHTML;
+        });
+}
+
+// Export functions for global use
+window.showModal = showModal;
+window.showModalWithLoading = showModalWithLoading;
+window.hideModal = hideModal;
+window.downloadImage = downloadImage;
 
 // =============================================================================
 // DOWNLOAD FUNCTIONS
@@ -399,7 +737,9 @@ function showKeyboardShortcuts() {
     
     modal.innerHTML = `
         <div class="modal-content">
-            <button class="modal-close" onclick="hideModal()">×</button>
+            <div class="modal-header">
+                <button class="modal-close" onclick="hideModal()" aria-label="Close modal">×</button>
+            </div>
             ${shortcuts}
         </div>
     `;

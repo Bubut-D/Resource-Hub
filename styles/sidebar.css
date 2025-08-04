@@ -1,5 +1,5 @@
 /* =============================================================================
-  SIDEBAR NAVIGATION STYLES WITH ENHANCED ANIMATIONS - FIXED VERSION
+  SIDEBAR NAVIGATION STYLES WITH ENHANCED ANIMATIONS - DYNAMIC CENTERING
   ============================================================================= */
 
 .sidebar {
@@ -22,12 +22,15 @@
    box-shadow: 4px 0 20px var(--shadow-color);
 }
 
-
-/* Enhanced Sidebar Toggle Animation - FIXED POSITIONING */
+/* Enhanced Sidebar Toggle Animation - DYNAMIC CENTERED POSITIONING */
 .sidebar-toggle {
+   /* Define button size as CSS custom property for reusability */
+   --toggle-button-size: 40px;
+   
    position: absolute !important;
    top: 15px !important;
-   left: 15px !important; /* This positions it from the left edge of the sidebar */
+   /* Dynamic centering: (collapsed-width - button-width) / 2 */
+   left: calc((var(--sidebar-collapsed-width) - var(--toggle-button-size)) / 2) !important;
    right: auto !important;
    background: none;
    border: none;
@@ -37,8 +40,8 @@
    padding: 8px;
    border-radius: var(--radius-round);
    transition: all var(--transition-fast);
-   width: 40px;
-   height: 40px;
+   width: var(--toggle-button-size);
+   height: var(--toggle-button-size);
    display: flex;
    align-items: center;
    justify-content: center;
@@ -97,9 +100,9 @@
 }
 
 .home-button:hover {
-    background: var(--gradient-hover);
-    transform: scale(1.1);
-    box-shadow: var(--shadow-small);
+   background: var(--gradient-hover);
+   transform: scale(1.15);
+   box-shadow: var(--shadow-small);
 }
 
 .home-button:active {
@@ -387,5 +390,3 @@
 .sidebar-section.active .sidebar-header {
    animation: pulse 2s infinite;
 }
-
-

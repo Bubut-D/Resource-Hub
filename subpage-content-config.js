@@ -1,6 +1,5 @@
-// Subpage Content Configuration
-// This file contains all content definitions for subpages
-// Import this file on any subpage that needs dynamic content
+// Enhanced Subpage Content Configuration with Stylish Links
+// This file contains all content definitions for subpages with new link display options
 
 window.subpageContentConfig = {
     "pages": {
@@ -32,54 +31,75 @@ window.subpageContentConfig = {
                 {
                     "id": "reflection-resources",
                     "title": "Reflection Resources",
-                    "type": "links",
+                    "type": "stylish-links", // New type for enhanced styling
                     "content": {
                         "text": "Master reflection with these comprehensive resources and documentation.",
                         "links": [
                             {
                                 "name": "Reflection in .NET",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/reflection",
-                                "external": true
+                                "external": true,
+                                "description": "Complete guide to reflection fundamentals in the .NET Framework",
+                                "category": "Documentation",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "book"
+                                }
                             },
                             {
                                 "name": "Viewing Type Information",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/viewing-type-information",
-                                "external": true
+                                "external": true,
+                                "description": "Learn how to examine types and their members at runtime",
+                                "category": "Tutorial",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "visibility"
+                                }
                             },
                             {
                                 "name": "Reflection and Generic Types",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/reflection-and-generic-types",
-                                "external": true
-                            },
-                            {
-                                "name": "How to: Examine and Instantiate Generic Types with Reflection",
-                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/how-to-examine-and-instantiate-generic-types-with-reflection",
-                                "external": true
+                                "external": true,
+                                "description": "Working with generic types using reflection techniques",
+                                "category": "Advanced",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "code"
+                                }
                             },
                             {
                                 "name": "Type Class",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/api/system.type?view=net-7.0",
-                                "external": true
-                            },
-                            {
-                                "name": "Dynamically Loading and Using Types (the section InvokeMember and CreateInstance)",
-                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamically-loading-and-using-types#invokemember-and-createinstance",
-                                "external": true
+                                "external": true,
+                                "description": "API reference for the System.Type class",
+                                "category": "API Reference",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "api"
+                                }
                             },
                             {
                                 "name": "Object.GetType Method",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/api/system.object.gettype?view=net-7.0",
-                                "external": true
-                            },
-                            {
-                                "name": 'Type-testing operators and cast expressions - is, as, typeof and casts (the section "typeof operator")',
-                                "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#typeof-operator",
-                                "external": true
+                                "external": true,
+                                "description": "Gets the Type of the current instance",
+                                "category": "API Reference",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "get_app"
+                                }
                             },
                             {
                                 "name": "BindingFlags Enum",
                                 "url": "https://learn.microsoft.com/en-us/dotnet/api/system.reflection.bindingflags?view=net-7.0",
-                                "external": true
+                                "external": true,
+                                "description": "Specifies flags that control binding and invocation",
+                                "category": "API Reference",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "flag"
+                                }
                             }
                         ]
                     }
@@ -87,7 +107,7 @@ window.subpageContentConfig = {
                 {
                     "id": "additional-resources",
                     "title": "Additional Resources",
-                    "type": "links",
+                    "type": "links", // Keep old style for comparison
                     "content": {
                         "text": "Master reflection with these comprehensive resources and documentation.",
                         "links": [
@@ -159,18 +179,6 @@ window.subpageContentConfig = {
                                 "alt": "Assembly Loading Process",
                                 "title": "Assembly Loading Process",
                                 "description": "Step-by-step diagram of how assemblies are loaded and inspected"
-                            },
-                            {
-                                "src": "https://picsum.photos/400/300?random=22",
-                                "alt": "Dynamic Method Invocation",
-                                "title": "Dynamic Method Invocation",
-                                "description": "Flow chart showing dynamic method invocation using reflection"
-                            },
-                            {
-                                "src": "https://picsum.photos/400/300?random=23",
-                                "alt": "Attribute Inspection",
-                                "title": "Attribute Inspection",
-                                "description": "Code example demonstrating custom attribute inspection"
                             }
                         ]
                     }
@@ -191,12 +199,24 @@ window.subpageContentConfig = {
                             {
                                 "name": "System.Reflection.Emit",
                                 "url": "https://docs.microsoft.com/en-us/dotnet/api/system.reflection.emit",
-                                "external": true
+                                "external": true,
+                                "description": "Dynamic code generation at runtime",
+                                "category": "Advanced",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "build"
+                                }
                             },
                             {
                                 "name": "Expression Trees",
                                 "url": "https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/expression-trees/",
-                                "external": true
+                                "external": true,
+                                "description": "Represent code as data structures",
+                                "category": "Advanced",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "account_tree"
+                                }
                             }
                         ],
                         "downloads": [
@@ -248,48 +268,42 @@ window.subpageContentConfig = {
                 {
                     "id": "json-libraries",
                     "title": "JSON Libraries & Tools",
-                    "type": "links",
+                    "type": "stylish-links",
                     "content": {
                         "text": "Essential libraries and tools for working with JSON in C#.",
                         "links": [
                             {
                                 "name": "Newtonsoft.Json (Json.NET)",
                                 "url": "https://www.newtonsoft.com/json",
-                                "external": true
+                                "external": true,
+                                "description": "The most popular JSON framework for .NET",
+                                "category": "Library",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "library_books"
+                                }
                             },
                             {
                                 "name": "System.Text.Json",
                                 "url": "https://docs.microsoft.com/en-us/dotnet/api/system.text.json",
-                                "external": true
+                                "external": true,
+                                "description": "Built-in high-performance JSON API for .NET Core",
+                                "category": "Built-in",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "speed"
+                                }
                             },
                             {
                                 "name": "JSON Schema .NET",
                                 "url": "https://github.com/gregsdennis/json-everything",
-                                "external": true
-                            }
-                        ]
-                    }
-                },
-                {
-                    "id": "json-resources",
-                    "title": "JSON Resources",
-                    "type": "downloads",
-                    "content": {
-                        "text": "Download comprehensive guides and examples for JSON processing.",
-                        "downloads": [
-                            {
-                                "filename": "json-guide.pdf",
-                                "displayName": "Complete JSON Guide for C#",
-                                "size": "2.8 MB",
-                                "type": "pdf",
-                                "description": "Comprehensive guide covering both Newtonsoft.Json and System.Text.Json"
-                            },
-                            {
-                                "filename": "json-examples.zip",
-                                "displayName": "JSON Code Examples",
-                                "size": "1.5 MB",
-                                "type": "zip",
-                                "description": "Sample code for serialization, deserialization, and custom converters"
+                                "external": true,
+                                "description": "JSON Schema validation for .NET",
+                                "category": "Validation",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "verified"
+                                }
                             }
                         ]
                     }
@@ -299,7 +313,7 @@ window.subpageContentConfig = {
     }
 };
 
-// Dynamic Subpage Content Generator
+// Enhanced Dynamic Subpage Content Generator
 class SubpageContentGenerator {
     constructor() {
         this.currentPageConfig = null;
@@ -398,6 +412,9 @@ class SubpageContentGenerator {
             case 'links':
                 sectionHTML += this.createLinksHTML(content);
                 break;
+            case 'stylish-links':
+                sectionHTML += this.createStylishLinksHTML(content);
+                break;
             case 'downloads':
                 sectionHTML += this.createDownloadsHTML(content);
                 break;
@@ -411,6 +428,38 @@ class SubpageContentGenerator {
 
         sectionHTML += '</div>';
         return sectionHTML;
+    }
+
+    createStylishLinksHTML(content) {
+        if (!content.links) return '';
+        
+        let html = '<div class="stylish-links-container">';
+        
+        content.links.forEach(link => {
+            const target = link.external ? ' target="_blank"' : '';
+            const iconHTML = this.createIconHTML(link.icon);
+            const category = link.category || 'Resource';
+            const description = link.description || 'Click to learn more';
+            
+            html += `
+                <a href="${link.url}" class="stylish-link-card" data-category="${category}"${target}>
+                    <div class="stylish-link-header">
+                        <div class="stylish-link-icon">
+                            ${iconHTML}
+                        </div>
+                        <div class="stylish-link-title-area">
+                            <h3 class="stylish-link-title">${link.name}</h3>
+                            <span class="stylish-link-category">${category}</span>
+                        </div>
+                    </div>
+                    <p class="stylish-link-description">${description}</p>
+                    ${link.external ? '<div class="stylish-link-external"><i class="fas fa-external-link-alt"></i></div>' : ''}
+                </a>
+            `;
+        });
+        
+        html += '</div>';
+        return html;
     }
 
     createContentHTML(content) {
@@ -488,7 +537,16 @@ class SubpageContentGenerator {
         }
         
         if (content.links) {
-            html += this.createLinksHTML(content);
+            // Check if links have enhanced properties for stylish display
+            const hasEnhancedLinks = content.links.some(link => 
+                link.description || link.category || link.icon
+            );
+            
+            if (hasEnhancedLinks) {
+                html += this.createStylishLinksHTML(content);
+            } else {
+                html += this.createLinksHTML(content);
+            }
         }
         
         if (content.downloads) {
@@ -503,7 +561,7 @@ class SubpageContentGenerator {
     }
 
     createIconHTML(icon) {
-        if (!icon) return '';
+        if (!icon) return '<i class="fas fa-link"></i>';
         
         if (icon.type === 'material') {
             return `<span class="material-symbols-outlined">${icon.name}</span>`;

@@ -1,4 +1,4 @@
-// Simple Animation Functions - FIXED VERSION
+// Simple Animation Functions - FIXED VERSION WITH AUTO-CLOSE SIDEBAR SECTIONS
 // Focus on movement animations only - REMOVED CONFLICTING BUTTON POSITIONING
 
 // Module toggle with auto-close and CSS-based fade-in animation
@@ -106,15 +106,36 @@ function closeSidebar() {
     });
 }
 
-// Sidebar section toggle with movement
+// FIXED: Sidebar section toggle with AUTO-CLOSE behavior
 function toggleSidebarSection(header) {
-    const section = header.closest('.sidebar-section');
-    const links = section.querySelectorAll('.sidebar-links a');
+    const currentSection = header.closest('.sidebar-section');
+    const allSections = document.querySelectorAll('.sidebar-section');
+    const isCurrentlyOpen = !currentSection.classList.contains('collapsed');
     
-    section.classList.toggle('collapsed');
+    console.log('toggleSidebarSection called', { currentSection, isCurrentlyOpen }); // Debug log
+    
+    // Close ALL other sections first
+    allSections.forEach(section => {
+        if (section !== currentSection) {
+            console.log('Closing other section:', section); // Debug log
+            section.classList.add('collapsed');
+            // Reset any inline styles from animations
+            const otherLinks = section.querySelectorAll('.sidebar-links a');
+            otherLinks.forEach(link => {
+                link.style.opacity = '';
+                link.style.transform = '';
+                link.style.transition = '';
+            });
+        }
+    });
+    
+    // Toggle current section
+    currentSection.classList.toggle('collapsed');
     
     // If opening, animate links sliding in
-    if (!section.classList.contains('collapsed')) {
+    if (!isCurrentlyOpen) {
+        console.log('Opening section with animation'); // Debug log
+        const links = currentSection.querySelectorAll('.sidebar-links a');
         setTimeout(() => {
             links.forEach((link, index) => {
                 link.style.opacity = '0';
@@ -128,10 +149,13 @@ function toggleSidebarSection(header) {
             });
         }, 100);
     } else {
+        console.log('Closing section'); // Debug log
         // Reset when closing
+        const links = currentSection.querySelectorAll('.sidebar-links a');
         links.forEach(link => {
             link.style.opacity = '';
             link.style.transform = '';
+            link.style.transition = '';
         });
     }
 }
@@ -150,4 +174,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remove this line that was causing the positioning issue:
         // homeButton.style.position = 'relative';
     }
+    
+    // Debug: Log all sidebar sections and their click handlers
+    const sidebarSections = document.querySelectorAll('.sidebar-section');
+    console.log('Found sidebar sections:', sidebarSections.length);
+    
+    sidebarSections.forEach((section, index) => {
+        const header = section.querySelector('.sidebar-header');
+        if (header) {
+            console.log(`Section ${index + 1}:`, section, 'Header:', header);
+            // Make sure each header has the onclick attribute
+            if (!header.getAttribute('onclick')) {
+                console.log('Adding onclick to header:', header);
+                header.setAttribute('onclick', 'toggleSidebarSection(this)');
+            }
+        }
+    });
 });

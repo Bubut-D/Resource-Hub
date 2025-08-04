@@ -1,5 +1,5 @@
 /* =============================================================================
-   MODAL AND OVERLAY STYLES
+   ENHANCED MODAL STYLES - NO OVERLAPPING ELEMENTS
    ============================================================================= */
 
 .modal {
@@ -10,122 +10,469 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.95);
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
     animation: modalFadeIn 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal.show {
     display: flex;
 }
 
+/* Optional: Add a subtle animation when modal opens */
+.modal.show .modal-close {
+    animation: slideInFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
 .modal-content {
     position: relative;
-    max-width: 90vw;
+    max-width: min(90vw, 800px);
     max-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-large);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
     animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Header with close button */
+.modal-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 24px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+/* PERFECTLY CENTERED MODAL CLOSE BUTTON */
+.modal-close {
+    /* Size and positioning */
+    width: 44px;
+    height: 44px;
+    position: relative;
+    
+    /* Perfect centering using flexbox */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Appearance */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-round);
+    color: var(--text-color);
+    cursor: pointer;
+    
+    /* Typography - perfectly centered X */
+    font-family:  Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: normal;
+    text-align: unset;
+    
+    /* Remove ALL default styling that could affect positioning */
+    padding: 0;
+    margin: 0;
+    outline: none;
+    text-decoration: none;
+    
+    /* Remove any browser-specific button styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* Effects */
+    backdrop-filter: blur(12px);
+    transition: all var(--transition-fast);
+    overflow: hidden;
+    
+    /* Ensure perfect vertical centering */
+    vertical-align: middle;
+}
+
+/* Subtle gradient overlay */
+.modal-close::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Enhanced hover state with smooth animations */
+.modal-close:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ff6b6b;
+    transform: scale(1.08) rotate(90deg);
+    box-shadow: 
+        0 6px 20px rgba(239, 68, 68, 0.25),
+        0 0 0 4px rgba(239, 68, 68, 0.1);
+    backdrop-filter: blur(16px);
+}
+
+.modal-close:hover::after {
+    opacity: 1;
+}
+
+/* Active state */
+.modal-close:active {
+    transform: scale(0.92) rotate(90deg);
+    transition-duration: 0.1s;
+}
+
+/* Focus state for accessibility */
+.modal-close:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    animation: closeButtonPulse 1.5s ease-in-out;
+}
+
+/* Image container */
+.modal-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 0; /* Important for flex shrinking */
 }
 
 .modal img {
     max-width: 100%;
-    max-height: 80vh;
+    max-height: 100%;
     border-radius: var(--radius-medium);
-    box-shadow: var(--shadow-large);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     object-fit: contain;
+    transition: transform var(--transition-fast);
 }
 
-.modal-close {
-    position: absolute;
-    top: -50px;
-    right: -10px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid var(--accent-color);
-    color: var(--text-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: var(--radius-round);
-    transition: all var(--transition-fast);
-    backdrop-filter: blur(10px);
+.modal img:hover {
+    transform: scale(1.02);
 }
 
-.modal-close:hover {
-    background: var(--accent-color);
-    color: var(--bg-dark);
-    transform: scale(1.1);
-}
-
-.modal-download {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--gradient-primary);
-    color: var(--text-color);
-    border: none;
-    padding: 12px 24px;
-    border-radius: var(--radius-large);
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all var(--transition-fast);
+/* Footer with title and download button */
+.modal-footer {
+    width: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
+    flex-direction: column;
+    gap: 15px;
     align-items: center;
-    gap: 8px;
-    box-shadow: var(--shadow-small);
-    backdrop-filter: blur(10px);
-}
-
-.modal-download:hover {
-    background: var(--gradient-hover);
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: var(--shadow-medium);
 }
 
 .modal-info {
-    position: absolute;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--text-color);
-    padding: 15px 20px;
-    border-radius: var(--radius-medium);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(168, 218, 220, 0.2);
-    max-width: 400px;
     text-align: center;
+    max-width: 100%;
 }
 
 .modal-info h3 {
     margin: 0 0 8px 0;
     color: var(--accent-color);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .modal-info p {
     margin: 0;
     font-size: 0.9rem;
     color: var(--text-muted);
+    line-height: 1.4;
 }
 
+.modal-download {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-large);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-download::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.modal-download:hover {
+    background: var(--gradient-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.modal-download:hover::before {
+    left: 100%;
+}
+
+.modal-download:active {
+    transform: translateY(0);
+}
+
+.modal-download:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.modal-download i {
+    font-size: 0.9rem;
+}
+
+/* Animations */
 @keyframes modalFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { 
+        opacity: 0; 
+        backdrop-filter: blur(0px);
+    }
+    to { 
+        opacity: 1; 
+        backdrop-filter: blur(8px);
+    }
 }
 
 @keyframes modalSlideIn {
     from {
         opacity: 0;
-        transform: scale(0.8) translateY(20px);
+        transform: scale(0.9) translateY(20px);
     }
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes closeButtonPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] .modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .modal-header {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .modal-close {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .modal-close:hover {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+    box-shadow: 
+        0 6px 20px rgba(239, 68, 68, 0.15),
+        0 0 0 4px rgba(239, 68, 68, 0.05);
+}
+
+[data-theme="light"] .modal-close::after {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.04) 100%);
+}
+
+[data-theme="light"] .modal-footer {
+    background: rgba(255, 255, 255, 0.8);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .modal-download {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .modal-download:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN FOR MODAL
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: var(--radius-medium);
+    }
+    
+    .modal-header {
+        padding: 12px 15px;
+    }
+    
+    .modal-close {
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+
+    .modal-close:hover {
+        transform: scale(1.05) rotate(90deg);
+    }
+    
+    .modal-image-container {
+        padding: 15px;
+    }
+    
+    .modal-footer {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .modal-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .modal-info p {
+        font-size: 0.85rem;
+    }
+    
+    .modal-download {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        padding: 5px;
+    }
+    
+    .modal-content {
+        border-radius: var(--radius-small);
+    }
+    
+    .modal-header {
+        padding: 10px 12px;
+    }
+    
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+    }
+    
+    .modal-close:hover {
+        transform: scale(1.03) rotate(90deg);
+    }
+    
+    .modal-image-container {
+        padding: 10px;
+    }
+    
+    .modal-footer {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .modal-info h3 {
+        font-size: 1rem;
+    }
+    
+    .modal-info p {
+        font-size: 0.8rem;
+    }
+    
+    .modal-download {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+}
+
+/* =============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================= */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .modal-content {
+        border: 2px solid var(--text-color);
+    }
+    
+    .modal-close {
+        border: 2px solid var(--text-color);
+    }
+    
+    .modal-download {
+        border: 2px solid var(--text-color);
     }
 }
