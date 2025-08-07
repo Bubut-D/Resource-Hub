@@ -15,7 +15,7 @@ window.modulesConfig = {
             "links": [
                 {
                     "name": "Reflection",
-                    "url": "pages/subtopic1.html",
+                    "url": "pages/reflection.html",
                     "icon": {
                         "type": "material",
                         "name": "search"

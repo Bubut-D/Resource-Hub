@@ -240,70 +240,248 @@ window.subpageContentConfig = {
                 }
             ]
         },
-        "json.html": {
-            "title": "JSON",
+        "reflection.html": {
+            "title": "Reflection",
             "icon": {
                 "type": "material",
-                "name": "data_object"
+                "name": "search"
             },
             "breadcrumb": {
                 "category": "C# Advanced",
-                "page": "JSON"
+                "page": "Reflection"
             },
             "sections": [
                 {
-                    "id": "json-basics",
-                    "title": "JSON in C#",
+                    "id": "reflection-overview",
+                    "title": "Understanding Reflection in C#",
                     "type": "content",
                     "content": {
-                        "text": "JSON (JavaScript Object Notation) is a lightweight data interchange format that's easy for humans to read and write. In C#, there are several ways to work with JSON data.",
+                        "text": "Reflection in C# is a powerful feature that allows you to inspect and interact with object types at runtime. It provides the ability to examine assemblies, modules, and types, dynamically create instances, invoke methods, and access fields and properties without knowing them at compile time.",
                         "subsections": [
                             {
-                                "title": "Popular JSON Libraries",
-                                "text": "Newtonsoft.Json and System.Text.Json are the most commonly used libraries for JSON processing in .NET applications."
+                                "title": "Core Benefits",
+                                "text": "Reflection enables dynamic programming scenarios such as creating flexible frameworks, implementing serialization, building dependency injection containers, and developing tools that work with unknown types at compile time."
+                            },
+                            {
+                                "title": "Performance Considerations",
+                                "text": "While powerful, reflection operations are generally slower than direct code access. Understanding when and how to use reflection efficiently is crucial for maintaining application performance."
                             }
                         ]
                     }
                 },
                 {
-                    "id": "json-libraries",
-                    "title": "JSON Libraries & Tools",
+                    "id": "reflection-fundamentals",
+                    "title": "Reflection Fundamentals",
                     "type": "stylish-links",
                     "content": {
-                        "text": "Essential libraries and tools for working with JSON in C#.",
+                        "text": "Master the core concepts and APIs that form the foundation of reflection in .NET.",
                         "links": [
                             {
-                                "name": "Newtonsoft.Json (Json.NET)",
-                                "url": "https://www.newtonsoft.com/json",
+                                "name": "Reflection in .NET",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/reflection",
                                 "external": true,
-                                "description": "The most popular JSON framework for .NET",
-                                "category": "Library",
+                                "description": "Complete guide to reflection fundamentals and architecture in the .NET Framework",
+                                "category": "Core Concepts",
                                 "icon": {
                                     "type": "material",
-                                    "name": "library_books"
+                                    "name": "foundation"
                                 }
                             },
                             {
-                                "name": "System.Text.Json",
-                                "url": "https://docs.microsoft.com/en-us/dotnet/api/system.text.json",
+                                "name": "System.Type Class",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/api/system.type?view=net-7.0",
                                 "external": true,
-                                "description": "Built-in high-performance JSON API for .NET Core",
-                                "category": "Built-in",
+                                "description": "The fundamental class representing type declarations in the .NET type system",
+                                "category": "API Reference",
                                 "icon": {
                                     "type": "material",
-                                    "name": "speed"
+                                    "name": "data_object"
                                 }
                             },
                             {
-                                "name": "JSON Schema .NET",
-                                "url": "https://github.com/gregsdennis/json-everything",
+                                "name": "Object.GetType Method",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/api/system.object.gettype?view=net-7.0",
                                 "external": true,
-                                "description": "JSON Schema validation for .NET",
-                                "category": "Validation",
+                                "description": "Gets the Type of the current instance - your gateway to runtime type information",
+                                "category": "Core Methods",
                                 "icon": {
                                     "type": "material",
-                                    "name": "verified"
+                                    "name": "get_app"
                                 }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "type-inspection",
+                    "title": "Type Inspection & Information",
+                    "type": "stylish-links",
+                    "content": {
+                        "text": "Learn how to examine types and their members to understand object structure at runtime.",
+                        "links": [
+                            {
+                                "name": "Viewing Type Information",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/viewing-type-information",
+                                "external": true,
+                                "description": "Comprehensive guide to examining types and discovering their members at runtime",
+                                "category": "Type Analysis",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "visibility"
+                                }
+                            },
+                            {
+                                "name": "BindingFlags Enumeration",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/api/system.reflection.bindingflags?view=net-7.0",
+                                "external": true,
+                                "description": "Control how reflection searches for and binds to members with precise filtering options",
+                                "category": "Member Access",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "tune"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "generic-types-reflection",
+                    "title": "Working with Generic Types",
+                    "type": "mixed",
+                    "content": {
+                        "text": "Generic types present unique challenges in reflection scenarios. Understanding how to work with generic type definitions, constructed generic types, and type parameters is essential for advanced reflection usage.",
+                        "subsections": [
+                            {
+                                "title": "Generic Type Definitions vs Constructed Types",
+                                "text": "Learn the difference between generic type definitions (like List<T>) and constructed generic types (like List<string>), and how to work with both using reflection."
+                            }
+                        ],
+                        "links": [
+                            {
+                                "name": "Reflection and Generic Types",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/reflection-and-generic-types",
+                                "external": true,
+                                "description": "Master the complexities of using reflection with generic types and type parameters",
+                                "category": "Advanced Topics",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "code"
+                                }
+                            },
+                            {
+                                "name": "Examine and Instantiate Generic Types",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/how-to-examine-and-instantiate-generic-types-with-reflection",
+                                "external": true,
+                                "description": "Step-by-step guide to examining and creating instances of generic types using reflection",
+                                "category": "How-To Guide",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "construction"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "dynamic-operations",
+                    "title": "Dynamic Loading and Invocation",
+                    "type": "mixed",
+                    "content": {
+                        "text": "Reflection enables dynamic loading of types and invocation of members at runtime, opening up possibilities for plugin architectures, configuration-driven behavior, and runtime code generation.",
+                        "subsections": [
+                            {
+                                "title": "InvokeMember and CreateInstance",
+                                "text": "These powerful methods allow you to call methods, access properties, and create object instances dynamically without compile-time knowledge of the types involved."
+                            },
+                            {
+                                "title": "Type Operators in Reflection Context",
+                                "text": "Understanding how typeof, is, and as operators work in conjunction with reflection provides a complete picture of runtime type operations."
+                            }
+                        ],
+                        "links": [
+                            {
+                                "name": "Dynamically Loading and Using Types",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamically-loading-and-using-types#invokemember-and-createinstance",
+                                "external": true,
+                                "description": "Learn to dynamically load assemblies and create instances with InvokeMember and CreateInstance",
+                                "category": "Dynamic Operations",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "dynamic_form"
+                                }
+                            },
+                            {
+                                "name": "Type-testing Operators",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#typeof-operator",
+                                "external": true,
+                                "description": "Master typeof, is, as, and cast expressions for comprehensive type testing and conversion",
+                                "category": "Type Operations",
+                                "icon": {
+                                    "type": "material",
+                                    "name": "compare"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "reflection-best-practices",
+                    "title": "Best Practices & Performance",
+                    "type": "content",
+                    "content": {
+                        "text": "Following established best practices when using reflection ensures your applications remain performant, secure, and maintainable while leveraging reflection's powerful capabilities.",
+                        "subsections": [
+                            {
+                                "title": "Implement Caching for Reflection",
+                                "text": "If you need to use reflection repeatedly, consider caching the retrieved type or member information to reduce overhead, which can significantly improve performance."
+                            },
+                            {
+                                "title": "Handle Errors Gracefully",
+                                "text": "Wrap reflection-related code in appropriate error-handling mechanisms. Reflection can throw various exceptions, such as TypeLoadException or MethodAccessException. Handle these exceptions gracefully to ensure your application remains stable."
+                            },
+                            {
+                                "title": "Prioritize Security Considerations",
+                                "text": "Be cautious when using reflection; it can potentially bypass access modifiers and security mechanisms. Avoid exposing sensitive data or methods that should not be accessible outside their intended scope."
+                            },
+                            {
+                                "title": "Test Reflection-Based Code Thoroughly",
+                                "text": "Test reflection-based code thoroughly. Create unit tests that cover various scenarios to ensure reflection-related operations behave as expected."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "additional-resources",
+                    "title": "Extended Learning Resources",
+                    "type": "links",
+                    "content": {
+                        "text": "Expand your reflection knowledge with these specialized resources and deep-dive materials.",
+                        "links": [
+                            {
+                                "name": "MethodBase Class Reference",
+                                "url": "https://learn.microsoft.com/en-us/dotnet/api/system.reflection.methodbase?view=net-7.0",
+                                "external": true
+                            },
+                            {
+                                "name": "CLR Inside Out: Reflection on Reflection",
+                                "url": "https://learn.microsoft.com/en-us/archive/msdn-magazine/2007/june/clr-inside-out-reflections-on-reflection",
+                                "external": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "visual-examples",
+                    "title": "Visual Learning & Examples",
+                    "type": "images",
+                    "content": {
+                        "text": "Explore reflection concepts through visual diagrams and practical examples that demonstrate key concepts.",
+                        "images": [
+                            {
+                                "src": "../assets/Reflection_Insights.png",
+                                "alt": "Reflection Best Practices and Insights",
+                                "title": "Reflection Insights",
+                                "description": "Expert recommendations and best practices for implementing caching, error handling, security considerations, and thorough testing in reflection-based code."
                             }
                         ]
                     }

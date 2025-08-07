@@ -1,0 +1,448 @@
+/* =============================================================================
+   ENHANCED TEXT STYLING FOR SUBPAGES
+   ============================================================================= */
+
+/* Enhanced content sections with better visual hierarchy */
+.content-section {
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.content-section:last-of-type:not(.content-section:has(.page-links)) {
+    margin-bottom: 40px;
+}
+
+/* Beautiful section headers with gradient underlines */
+.content-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+    border-bottom: none; /* Remove the old border */
+}
+
+.content-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+    animation: expandUnderline 0.8s ease-out;
+}
+
+@keyframes expandUnderline {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 80px;
+        opacity: 1;
+    }
+}
+
+/* Enhanced subsection headers */
+.content-section h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin: 35px 0 20px 0;
+    padding-left: 15px;
+    border-left: 4px solid var(--primary-color);
+    position: relative;
+    background: linear-gradient(90deg, 
+        rgba(74, 144, 226, 0.1) 0%, 
+        rgba(74, 144, 226, 0.05) 30%, 
+        transparent 100%);
+    padding: 12px 20px 12px 15px;
+    border-radius: 0 8px 8px 0;
+    transition: all var(--transition-fast);
+}
+
+/* Updated hover effect for h3 - now targets the container */
+.content-section h3:hover {
+    background: linear-gradient(90deg, 
+        rgba(74, 144, 226, 0.15) 0%, 
+        rgba(74, 144, 226, 0.08) 30%, 
+        transparent 100%);
+}
+
+/* Create a hover group effect for h3 and its following paragraph */
+.content-section h3:hover {
+    transform: translateX(5px);
+}
+
+.content-section h3:hover + p {
+    transform: translateX(5px);
+}
+
+/* Enhanced paragraph styling with better readability */
+.content-section > p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    text-align: justify;
+    max-width: none;
+    position: relative;
+    padding: 0 5px;
+}
+
+/* Improved paragraph styling for better visual flow */
+.content-section > p:first-of-type {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    background: linear-gradient(135deg, 
+        rgba(100, 181, 246, 0.08) 0%, 
+        rgba(100, 181, 246, 0.03) 100%);
+    padding: 20px 25px;
+    border-radius: var(--radius-medium);
+    border-left: 4px solid var(--accent-color);
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-section > p:first-of-type::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.03) 0%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.03) 100%);
+    pointer-events: none;
+}
+
+/* Enhanced subsection content with coordinated hover transition */
+.content-section h3 + p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 2px solid rgba(100, 181, 246, 0.3);
+    background: linear-gradient(90deg, 
+        rgba(100, 181, 246, 0.05) 0%, 
+        transparent 40%);
+    padding: 15px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 25px;
+    position: relative;
+    transition: all var(--transition-fast); /* Add transition for smooth movement */
+}
+
+/* Elegant quote-like styling for important paragraphs */
+.content-section > p:nth-of-type(2) {
+    font-style: italic;
+    position: relative;
+    padding-left: 40px;
+    margin: 30px 0;
+}
+
+.content-section > p:nth-of-type(2)::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: -10px;
+    line-height: 1;
+    opacity: 0.3;
+    font-family: Georgia, serif;
+}
+
+/* Enhanced list styling within content */
+.content-section ul,
+.content-section ol {
+    margin: 25px 0;
+    padding-left: 30px;
+}
+
+.content-section li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    position: relative;
+}
+
+.content-section ul li::marker {
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.content-section ol li::marker {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Code styling within text */
+.content-section code {
+    background: rgba(100, 181, 246, 0.15);
+    color: var(--accent-color);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+/* Enhanced blockquote styling */
+.content-section blockquote {
+    background: linear-gradient(135deg, 
+        rgba(100, 181, 246, 0.1) 0%, 
+        rgba(80, 200, 120, 0.05) 100%);
+    border-left: 5px solid var(--primary-color);
+    margin: 30px 0;
+    padding: 25px 30px;
+    border-radius: 0 12px 12px 0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.content-section blockquote::before {
+    content: 'ℹ️';
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+
+/* Strong/bold text enhancement */
+.content-section strong,
+.content-section b {
+    color: var(--accent-color);
+    font-weight: 600;
+    position: relative;
+}
+
+/* Emphasis/italic text enhancement */
+.content-section em,
+.content-section i {
+    color: var(--primary-color);
+    font-style: italic;
+}
+
+/* Links within content sections */
+.content-section a:not(.page-link):not(.stylish-link-card) {
+    color: var(--primary-color);
+    text-decoration: none;
+    position: relative;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    background: linear-gradient(135deg, 
+        rgba(74, 144, 226, 0.1) 0%, 
+        transparent 100%);
+}
+
+.content-section a:not(.page-link):not(.stylish-link-card):hover {
+    color: var(--text-color);
+    background: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+}
+
+.content-section a:not(.page-link):not(.stylish-link-card)::after {
+    content: '↗';
+    font-size: 0.8em;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+/* Text selection enhancement */
+.content-section ::selection {
+    background: rgba(100, 181, 246, 0.3);
+    color: var(--text-color);
+}
+
+/* Animated content reveal on scroll */
+.content-section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: revealContent 0.8s ease-out forwards;
+}
+
+.content-section:nth-child(1) { animation-delay: 0.1s; }
+.content-section:nth-child(2) { animation-delay: 0.2s; }
+.content-section:nth-child(3) { animation-delay: 0.3s; }
+.content-section:nth-child(4) { animation-delay: 0.4s; }
+.content-section:nth-child(5) { animation-delay: 0.5s; }
+.content-section:nth-child(6) { animation-delay: 0.6s; }
+.content-section:nth-child(7) { animation-delay: 0.7s; }
+.content-section:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes revealContent {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced welcome section */
+.welcome-section {
+    background: linear-gradient(135deg, 
+        rgba(100, 181, 246, 0.15) 0%, 
+        rgba(80, 200, 120, 0.1) 50%,
+        rgba(100, 181, 246, 0.08) 100%);
+    border: 2px solid rgba(100, 181, 246, 0.2);
+    border-radius: var(--radius-large);
+    padding: 40px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin: 0;
+    text-align: center;
+    font-weight: 400;
+}
+
+/* Breadcrumb enhancement */
+.breadcrumb {
+    background: linear-gradient(135deg, 
+        rgba(100, 181, 246, 0.1) 0%, 
+        rgba(100, 181, 246, 0.05) 100%);
+    padding: 15px 25px;
+    border-radius: var(--radius-medium);
+    margin-bottom: 30px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.breadcrumb a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+    color: var(--accent-color);
+}
+
+.breadcrumb .separator {
+    margin: 0 12px;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.breadcrumb .current {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .content-section > p:first-of-type {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.08) 0%, 
+        rgba(37, 99, 235, 0.03) 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .content-section h3 {
+    background: linear-gradient(90deg, 
+        rgba(37, 99, 235, 0.1) 0%, 
+        rgba(37, 99, 235, 0.05) 30%, 
+        transparent 100%);
+}
+
+[data-theme="light"] .content-section h3:hover {
+    background: linear-gradient(90deg, 
+        rgba(37, 99, 235, 0.15) 0%, 
+        rgba(37, 99, 235, 0.08) 30%, 
+        transparent 100%);
+}
+
+[data-theme="light"] .content-section h3 + p {
+    background: linear-gradient(90deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        transparent 40%);
+    border-left-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="light"] .welcome-section {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.1) 0%, 
+        rgba(16, 185, 129, 0.08) 50%,
+        rgba(37, 99, 235, 0.06) 100%);
+    border-color: rgba(37, 99, 235, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .breadcrumb {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.08) 0%, 
+        rgba(37, 99, 235, 0.04) 100%);
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .content-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+    
+    .content-section h3 {
+        font-size: 1.2rem;
+        margin: 25px 0 15px 0;
+        padding: 10px 15px 10px 12px;
+    }
+    
+    .content-section > p {
+        font-size: 1rem;
+        line-height: 1.7;
+        text-align: left;
+    }
+    
+    .content-section > p:first-of-type {
+        font-size: 1.1rem;
+        padding: 15px 20px;
+    }
+    
+    .content-section h3 + p {
+        margin-left: 10px;
+        padding: 12px 15px;
+    }
+    
+    .welcome-section {
+        padding: 25px;
+        margin-bottom: 35px;
+    }
+    
+    .welcome-section p {
+        font-size: 1.1rem;
+    }
+}
